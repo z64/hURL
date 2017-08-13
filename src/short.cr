@@ -11,6 +11,10 @@ module Short
     {{raise "Only Memory cache currently supported. Compile with flag memory-cache."}}
   {% end %}
 
+  # Resolves a link code and executes a redirect.
+  # If the requester will `Accept` `application/json`,
+  # the `Link` object as JSON is returned instead and no
+  # redirect is performed.
   get "/link/:code", Logger.new do |ctx|
     code = ctx.params["code"]
 
@@ -26,6 +30,11 @@ module Short
     end
   end
 
+  # Creates a new Link.
+  # This route requires a User-Agent that passes the `RequireUserAgent` middleware.
+  # The JSON at minimum must contain a string `target` key, which must
+  # have an HTTPS scheme and respond to a HEAD request with a 200 response.
+  # Returns the created `Link` object.
   post "/create", Logger.new, RequireUserAgent.new, JSONContentType.new do |ctx|
     begin
       link = Link.new(ctx.request.body.as(IO))
