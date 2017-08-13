@@ -10,7 +10,7 @@ module Short
   get "/link/:code", Logger.new do |ctx|
     code = ctx.params["code"]
 
-    if link = @@cache.fetch(code.as(String))
+    if link = @@cache.resolve(code.as(String))
       if ctx.request.headers["Accept"] == "application/json"
         link.to_json
       else

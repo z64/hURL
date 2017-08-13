@@ -1,7 +1,7 @@
 module Short
   abstract class Cache
     abstract def store(link : Link)
-    abstract def fetch(code : String)
+    abstract def resolve(code : String)
   end
 
   class Memory < Cache
@@ -13,7 +13,7 @@ module Short
       @links[code] = link
     end
 
-    def fetch(code : String)
+    def resolve(code : String)
       links[code]
     end
   end
