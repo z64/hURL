@@ -28,11 +28,11 @@ module Short
       @@cache.store(link)
       link.to_json
     rescue ex : JSON::ParseException
-      ctx.halt "Invalid JSON (#{ex})", 400
+      ctx.halt_plain "Invalid JSON Body (#{ex.class}): #{ex.message}", 400
     rescue ex : InvalidURI
-      ctx.halt "Invalid URI: #{ex.message}", 400
+      ctx.halt_plain "Invalid URI: #{ex.message}", 400
     rescue ex : InvalidTTL
-      ctx.halt "Invalid TTL: #{ex.message}", 400
+      ctx.halt_plain "Invalid TTL: #{ex.message}", 400
     end
   end
 end
