@@ -19,8 +19,20 @@ module Short
     # Stores a Link object
     def store(link : Link)
       code = (links.size + 1).to_s(62)
+
       link.code = code
+      expire(link)
+
       @links[code] = link
+    end
+
+    # Sets up a fiber to expire this link after
+    # the `Link`'s `#ttl`.
+    private def expire(link)
+      spawn do
+        sleep link.ttl.seconds
+        @links.delete(link.code)
+      end
     end
 
     # Retrieves a Link object by code
