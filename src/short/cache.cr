@@ -37,7 +37,7 @@ module Short
 
     # Retrieves a Link object by code
     def resolve(code : String)
-      links[code]
+      links[code]?
     end
   end
 end
