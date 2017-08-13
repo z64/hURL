@@ -1,9 +1,14 @@
 require "logger"
 
 module Short
+  # Logger instance
   LOGGER = ::Logger.new(STDOUT)
+
+  # Logger level
+  # TODO: Make this configurable.
   LOGGER.level = ::Logger::DEBUG
 
+  # Middleware for logging all incoming requests
   class Logger < Raze::Handler
     def call(ctx, done)
       request = ctx.request
@@ -12,6 +17,8 @@ module Short
     end
   end
 
+  # Middleware for validating `User-Agent` header is present
+  # Halts the context if it isn't
   class RequireUserAgent < Raze::Handler
     def call(ctx, done)
       user_agent = ctx.request.headers["User-Agent"]
@@ -20,6 +27,8 @@ module Short
     end
   end
 
+  # Middleware for setting the `Content-Type` header to `application/json`
+  # in applicable routes
   class JSONContentType < Raze::Handler
     def call(ctx, done)
       ctx.response.headers["Content-Type"] = "application/json"
