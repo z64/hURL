@@ -1,5 +1,5 @@
 module Short
-  class ContentType < Raze::Handler
+  class JSONContentType < Raze::Handler
     def call(ctx, done)
       ctx.response.headers["Content-Type"] = "application/json"
       done.call

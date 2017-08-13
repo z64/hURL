@@ -22,7 +22,7 @@ module Short
     end
   end
 
-  post "/create", ContentType.new do |ctx|
+  post "/create", JSONContentType.new do |ctx|
     begin
       link = Link.new(ctx.request.body.as(IO))
       @@cache.store(link)
