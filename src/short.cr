@@ -15,7 +15,7 @@ module Short
   # If the requester will `Accept` `application/json`,
   # the `Link` object as JSON is returned instead and no
   # redirect is performed.
-  get "/link/:code", Logger.new do |ctx|
+  get "/:code", Logger.new do |ctx|
     code = ctx.params["code"]
 
     if link = @@cache.resolve(code.as(String))
@@ -35,7 +35,7 @@ module Short
   # The JSON at minimum must contain a string `target` key, which must
   # have an HTTPS scheme and respond to a HEAD request with a 200 response.
   # Returns the created `Link` object.
-  post "/create", Logger.new, RequireUserAgent.new, JSONContentType.new do |ctx|
+  post "/", Logger.new, RequireUserAgent.new, JSONContentType.new do |ctx|
     begin
       link = Link.new(ctx.request.body.as(IO))
       @@cache.store(link)
