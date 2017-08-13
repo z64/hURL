@@ -5,7 +5,11 @@ require "./short/middleware"
 require "./short/cache"
 
 module Short
-  @@cache = Memory.new
+  {% if flag?(:memory_cache) %}
+    @@cache = Memory.new
+  {% else %}
+    {{raise "Only Memory cache currently supported. Compile with flag memory-cache."}}
+  {% end %}
 
   get "/link/:code", Logger.new do |ctx|
     code = ctx.params["code"]
