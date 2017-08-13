@@ -7,7 +7,7 @@ require "./short/cache"
 module Short
   @@cache = Memory.new
 
-  get "/link/:code" do |ctx|
+  get "/link/:code", Logger.new do |ctx|
     code = ctx.params["code"]
 
     if link = @@cache.fetch(code.as(String))
@@ -22,7 +22,7 @@ module Short
     end
   end
 
-  post "/create", JSONContentType.new do |ctx|
+  post "/create", Logger.new, JSONContentType.new do |ctx|
     begin
       link = Link.new(ctx.request.body.as(IO))
       @@cache.store(link)
