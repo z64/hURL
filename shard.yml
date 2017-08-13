@@ -1,0 +1,19 @@
+name: short
+version: 0.1.0
+
+authors:
+  - Zac Nowicki <zachnowicki@gmail.com>
+
+dependencies:
+  raze:
+    github: samueleaton/raze
+  redis:
+    github: stefanwille/crystal-redis
+
+targets:
+  short:
+    main: src/short.cr
+
+crystal: 0.23.1
+
+license: MIT
