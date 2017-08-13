@@ -24,13 +24,13 @@ module Short
   end
 
   class Link
-    JSON.mapping(
-      target: {type: URI, converter: URIConverter},
-      ttl: {type: Int64, default: 5.minutes.to_i},
-      code: String?,
+    JSON.mapping({
+      target:     {type: URI, converter: URIConverter},
+      ttl:        {type: Int64, default: 5.minutes.to_i},
+      code:       String?,
       created_at: Time?,
-      uses: {type: Int64, default: 0_i64}
-    )
+      uses:       {type: Int64, default: 0_i64},
+    }, strict: true)
 
     def initialize(io : IO)
       initialize(JSON::PullParser.new(io))
