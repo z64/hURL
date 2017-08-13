@@ -12,6 +12,14 @@ module Short
     end
   end
 
+  class RequireUserAgent < Raze::Handler
+    def call(ctx, done)
+      user_agent = ctx.request.headers["User-Agent"]
+      return ctx.halt_plain "You must supply a User-Agent.", 400 if user_agent.nil? || user_agent.empty?
+      done.call
+    end
+  end
+
   class JSONContentType < Raze::Handler
     def call(ctx, done)
       ctx.response.headers["Content-Type"] = "application/json"
