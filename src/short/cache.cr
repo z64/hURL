@@ -9,6 +9,10 @@ module Short
     abstract def resolve(code : String)
   end
 
+  # Exception to raise when an invalid code is given
+  class InvalidCode < Exception
+  end
+
   # A basic, in-memory implementation of `Cache`.
   # Mostly useful for debugging purposes, as it is
   # not persistant.
@@ -16,11 +20,19 @@ module Short
     # The cached `Link` objects.
     getter links = {} of String => Link
 
-    # Stores a Link object
+    # Stores a Link object.
+    # Raises an `InvalidCode` exception if the link already has a `code` present
+    # and that `code` is already in-use
     def store(link : Link)
-      code = (links.size + 1).to_s(62)
+      if code = link.code
+        raise InvalidCode.new("Code cannot be empty") if code.empty?
+        raise InvalidCode.new("Code already exists") if links.has_key?(code)
+      else
+        link.code = next_code
+      end
 
-      link.code = code
+      code = link.code.not_nil!
+
       expire(link)
 
       @links[code] = link
@@ -33,6 +45,11 @@ module Short
         sleep link.ttl.seconds
         @links.delete(link.code)
       end
+    end
+
+    # Returns the next code based on the current links hash
+    private def next_code
+      (links.size + 1).to_s(62)
     end
 
     # Retrieves a Link object by code

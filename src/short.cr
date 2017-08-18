@@ -46,6 +46,8 @@ module Short
       ctx.halt_plain "Invalid URI: #{ex.message}", 400
     rescue ex : InvalidTTL
       ctx.halt_plain "Invalid TTL: #{ex.message}", 400
+    rescue ex : InvalidCode
+      ctx.halt_plain "Invalid Code: #{ex.message}", 400
     end
   end
 end
