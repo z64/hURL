@@ -37,7 +37,9 @@ module Short
     # NOTE: This doesn't check to see if the last code was used, and will always increment
     #   the `Redis` index.
     private def next_code
-      redis.incr("short:links").to_s(62)
+      code = redis.incr("short:links").to_s(62)
+      return next_code if redis.exists("short:link:#{code}") == 1
+      code
     end
 
     # Retrieves a Link object by code.
@@ -96,7 +98,9 @@ module Short
 
     # Returns the next code based on the current links hash
     private def next_code
-      (links.size + 1).to_s(62)
+      code = (links.size + 1).to_s(62)
+      return next_code if links.has_key?(code)
+      code
     end
 
     # Retrieves a Link object by code
