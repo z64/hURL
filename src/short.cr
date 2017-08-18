@@ -16,9 +16,9 @@ module Short
   # the `Link` object as JSON is returned instead and no
   # redirect is performed.
   get "/:code", Logger.new do |ctx|
-    code = ctx.params["code"]
+    code = ctx.params["code"].as(String)
 
-    if link = @@cache.resolve(code.as(String))
+    if link = @@cache.resolve(code)
       if ctx.request.headers["Accept"] == "application/json"
         link.to_json
       else
