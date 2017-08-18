@@ -1,5 +1,6 @@
 require "json"
 require "raze"
+require "./short/exception"
 require "./short/link"
 require "./short/middleware"
 require "./short/cache"
@@ -42,12 +43,8 @@ module Short
       link.to_json
     rescue ex : JSON::ParseException
       ctx.halt_plain "Invalid JSON Body (#{ex.class}): #{ex.message}", 400
-    rescue ex : InvalidURI
-      ctx.halt_plain "Invalid URI: #{ex.message}", 400
-    rescue ex : InvalidTTL
-      ctx.halt_plain "Invalid TTL: #{ex.message}", 400
-    rescue ex : InvalidCode
-      ctx.halt_plain "Invalid Code: #{ex.message}", 400
+    rescue ex : ShortException
+      ctx.halt_plain "#{ex.class} (#{ex.message})", 400
     end
   end
 end

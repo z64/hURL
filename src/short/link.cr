@@ -25,14 +25,6 @@ module Short
     end
   end
 
-  # Exception for Invalid URIs
-  class InvalidURI < Exception
-  end
-
-  # Exception for Invalid TTL values
-  class InvalidTTL < Exception
-  end
-
   # A redirectable link that is validated against certain criteria,
   # and an expiry TTL (the TTL must be implemented by a `Cache`)
   class Link

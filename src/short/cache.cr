@@ -58,10 +58,6 @@ module Short
     end
   end
 
-  # Exception to raise when an invalid code is given
-  class InvalidCode < Exception
-  end
-
   # A basic, in-memory implementation of `Cache`.
   # Mostly useful for debugging purposes, as it is
   # not persistant.
