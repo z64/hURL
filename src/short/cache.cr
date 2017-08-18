@@ -1,3 +1,5 @@
+require "redis"
+
 module Short
   # Cache interface, describing what a Cache must implement
   # to behave correctly with the rest of the application.
@@ -7,6 +9,51 @@ module Short
 
     # Retrieves a Link object by code
     abstract def resolve(code : String)
+  end
+
+  # Redis cache
+  class Redis < Cache
+    getter redis = ::Redis.new
+
+    # Stores a Link object.
+    # Raises an `InvalidCode` exception if the link already has a `code` present
+    # and that `code` is already in-use.
+    def store(link : Link)
+      if code = link.code
+        raise InvalidCode.new("Code cannot be empty") if code.empty?
+        raise InvalidCode.new("Code already exists") if redis.exists("short:link:#{code}") == 1
+      else
+        link.code = next_code
+      end
+
+      code = link.code.not_nil!
+
+      key = "short:link:#{code}"
+      redis.set(key, link.to_json, link.ttl)
+      redis.set("#{key}:uses", 0, link.ttl)
+    end
+
+    # Returns the next code in sequence
+    # NOTE: This doesn't check to see if the last code was used, and will always increment
+    #   the `Redis` index.
+    private def next_code
+      redis.incr("short:links").to_s(62)
+    end
+
+    # Retrieves a Link object by code.
+    # In contrast with `Memory`, this will increment the amount of times
+    # the link is used each time it is resolved, regardless if it is used for a redirect.
+    def resolve(code : String)
+      key = "short:link:#{code}"
+
+      if json = redis.get(key)
+        link = Link.from_json(json)
+        link.ttl = redis.ttl(key)
+        link.uses = redis.incr("#{key}:uses")
+
+        link
+      end
+    end
   end
 
   # Exception to raise when an invalid code is given

@@ -8,7 +8,7 @@ module Short
   {% if flag?(:memory_cache) %}
     @@cache = Memory.new
   {% else %}
-    {{raise "Only Memory cache currently supported. Compile with flag memory-cache."}}
+    @@cache = Redis.new
   {% end %}
 
   # Resolves a link code and executes a redirect.
