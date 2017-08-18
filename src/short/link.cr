@@ -64,7 +64,7 @@ module Short
     def validate!
       raise InvalidURI.new("Only HTTPS schemes are accepted.") unless target.scheme == "https"
       raise InvalidTTL.new("TTL greater than MAX_TTL: #{MAX_TTL}") if ttl > MAX_TTL
-      raise InvalidTTL.new("TTL greater than MIN_TTL: #{MIN_TTL}") if ttl < MIN_TTL
+      raise InvalidTTL.new("TTL less than MIN_TTL: #{MIN_TTL}") if ttl < MIN_TTL
       raise InvalidURI.new("Host not found at: #{target}") unless HTTP::Client.head(target, tls: SSL_CONTEXT).status_code == 200
     end
   end
