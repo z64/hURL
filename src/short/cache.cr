@@ -13,7 +13,7 @@ module Short
 
   # Redis cache
   class Redis < Cache
-    getter redis = ::Redis.new
+    getter redis = ::Redis.new(host: "redis")
 
     # Stores a Link object.
     # Raises an `InvalidCode` exception if the link already has a `code` present

@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  redis:
+    image: redis:latest
+    command: redis-server --appendonly yes
+    volumes:
+      - ./.data:/data
+  short:
+    build: .
+    command: /opt/short/bin/short
+    ports:
+      - "7777:7777"
+    depends_on:
+      - redis
+
