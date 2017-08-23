@@ -11,6 +11,6 @@ module Hurl
   end
   
   # Exception to raise when an invalid code is given
-  class InvalidCode < Exception
+  class InvalidCode < HurlException
   end
 end
