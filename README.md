@@ -30,6 +30,18 @@ ttl    | integer    | no
 - `code` must not already be taken. If omitted, one will be generated.
 - `ttl` must be within the compiled `MIN_TTL` and `MAX_TTL`. If omitted, a default will be provided.
 
+#### JSON Body Example
+
+```json
+{
+  "target": "https://github.com/z64/hURL",
+  "code": "hurl",
+  "ttl": 120
+}
+```
+
+The redirect will live at `localhost:7777/hurl` until it expires.
+
 ### `GET /{code}` - Query redirect
 
 Executes a redirect stored at the given `code` to its `target`.
