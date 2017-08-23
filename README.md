@@ -28,6 +28,7 @@ ttl    | integer    | no
 
 - `target` must be HTTPS scheme and the host must respond to a `HEAD` request, replying with an `200 OK` status code.
 - `code` must not already be taken. If omitted, one will be generated.
+- `code` length must not be longer than the compiled `MAX_CODE_LENGTH`.
 - `ttl` must be within the compiled `MIN_TTL` and `MAX_TTL`. If omitted, a default will be provided.
 
 #### JSON Body Example

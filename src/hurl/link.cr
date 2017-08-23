@@ -13,6 +13,10 @@ module Hurl
   # TODO: Make this configurable.
   MIN_TTL = 60
 
+  # Maximum code length
+  # TODO: Make this configurable.
+  MAX_CODE_LENGTH = 16
+
   # Converter for parsing JSON URL values into a `URI`
   # for performing validation
   module URIConverter
@@ -54,6 +58,7 @@ module Hurl
     #   - Be within MAX_TTL and MIN_TTL
     #   - The target URI must respond to a HEAD request with a `200 OK` status code
     def validate!
+      raise InvalidCode.new("Code length greater than MAX_CODE_LENGTH: #{MAX_CODE_LENGTH}") if code.size > MAX_CODE_LENGTH
       raise InvalidURI.new("Only HTTPS schemes are accepted.") unless target.scheme == "https"
       raise InvalidTTL.new("TTL greater than MAX_TTL: #{MAX_TTL}") if ttl > MAX_TTL
       raise InvalidTTL.new("TTL less than MIN_TTL: #{MIN_TTL}") if ttl < MIN_TTL
