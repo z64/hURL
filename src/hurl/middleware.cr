@@ -1,6 +1,6 @@
 require "logger"
 
-module Short
+module Hurl
   # Logger instance
   LOGGER = ::Logger.new(STDOUT)
 

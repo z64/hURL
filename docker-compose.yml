@@ -6,9 +6,9 @@ services:
     command: redis-server --appendonly yes
     volumes:
       - ./.data:/data
-  short:
+  app:
     build: .
-    command: /opt/short/bin/short
+    command: /opt/hurl/bin/hurl
     ports:
       - "7777:7777"
     depends_on:

@@ -1,5 +1,5 @@
 FROM crystallang/crystal:latest
-RUN mkdir /opt/short
-COPY . /opt/short/
-WORKDIR /opt/short
+RUN mkdir /opt/hurl
+COPY . /opt/hurl/
+WORKDIR /opt/hurl
 RUN shards build

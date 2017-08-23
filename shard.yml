@@ -1,4 +1,4 @@
-name: short
+name: hurl
 version: 0.1.0
 
 authors:
@@ -11,8 +11,8 @@ dependencies:
     github: stefanwille/crystal-redis
 
 targets:
-  short:
-    main: src/short.cr
+  hurl:
+    main: src/hurl.cr
 
 crystal: 0.23.1
 

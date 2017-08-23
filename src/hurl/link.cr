@@ -1,7 +1,7 @@
 require "http/client"
 require "openssl/ssl/context"
 
-module Short
+module Hurl
   # For performing requests with TLS
   SSL_CONTEXT = OpenSSL::SSL::Context::Client.new
 

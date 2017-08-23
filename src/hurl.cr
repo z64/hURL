@@ -1,11 +1,11 @@
 require "json"
 require "raze"
-require "./short/exception"
-require "./short/link"
-require "./short/middleware"
-require "./short/cache"
+require "./hurl/exception"
+require "./hurl/link"
+require "./hurl/middleware"
+require "./hurl/cache"
 
-module Short
+module Hurl
   {% if flag?(:memory_cache) %}
     @@cache = Memory.new
   {% else %}
@@ -43,7 +43,7 @@ module Short
       link.to_json
     rescue ex : JSON::ParseException
       ctx.halt_plain "Invalid JSON Body (#{ex.class}): #{ex.message}", 400
-    rescue ex : ShortException
+    rescue ex : HurlException
       ctx.halt_plain "#{ex.class} (#{ex.message})", 400
     end
   end

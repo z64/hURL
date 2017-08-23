@@ -1,13 +1,13 @@
-module Short
-  class ShortException < Exception
+module Hurl
+  class HurlException < Exception
   end
 
   # Exception for Invalid URIs
-  class InvalidURI < ShortException
+  class InvalidURI < HurlException
   end
 
   # Exception for Invalid TTL values
-  class InvalidTTL < ShortException
+  class InvalidTTL < HurlException
   end
   
   # Exception to raise when an invalid code is given

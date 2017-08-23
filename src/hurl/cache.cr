@@ -1,6 +1,6 @@
 require "redis"
 
-module Short
+module Hurl
   # Cache interface, describing what a Cache must implement
   # to behave correctly with the rest of the application.
   abstract class Cache
