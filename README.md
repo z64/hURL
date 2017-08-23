@@ -51,6 +51,24 @@ If you provide the header `Accept: application/json`, you will get the stored ob
 
 > Note: If using Redis, viewing the redirect object counts as a use.
 
+## Client
+
+An (extremely simple) client is provided too for your crystal apps to talk to a hURL service.
+
+### Usage
+
+```cr
+require "hurl/client"
+
+client = Hurl::Client.new("http://hrl.zsixtyfour.com")
+
+client.create("https://github.com/z64/hURL", code: "hurl")
+#=> Link
+
+link = client.get("hurl")
+#=> Link
+```
+
 ## Contributors
 
 - [z64](https://github.com/z64) Zac Nowicki - creator, maintainer
